@@ -2,16 +2,19 @@
 Anonymized code for NeurIPS 2021 submission.
 
 ### Dependencies
-```
-pip install -r requirements.txt
-```
-[Habitat-lab](https://github.com/facebookresearch/habitat-lab) and [habitat-sim](https://github.com/facebookresearch/habitat-sim) need to be installed before using our code. We build our method on the latest stable versions for both, so use `git checkout tags/v0.1.7` before installation. Follow the instructions in their corresponding repositories to install them on your system. Note that our code expects that habitat-sim is installed with the flag `--with-cuda`.
 
 We provide a Dockerfile in this repository which you can use to build an Docker image. In the Docker image, run
 ```
 source activate habitat
 ```
 to activate the Conda environment where the dependencies installed. When we release our code, we will also provide this image via DockerHub.
+
+To install the dependencies manually, run:
+```
+pip install -r requirements.txt
+```
+[Habitat-lab](https://github.com/facebookresearch/habitat-lab) and [habitat-sim](https://github.com/facebookresearch/habitat-sim) need to be installed before using our code. We build our method on the latest stable versions for both, so use `git checkout tags/v0.1.7` before installation. Follow the instructions in their corresponding repositories to install them on your system. Note that our code expects that habitat-sim is installed with the flag `--with-cuda`.
+
 
 ### Data
 We use the Matterport3D (MP3D) dataset (the habitat subset and not the entire Matterport3D) for our experiments. Follow the instructions in the [habitat-lab](https://github.com/facebookresearch/habitat-lab) repository regarding the dataset folder structure. In addition we provide the following:
@@ -28,6 +31,7 @@ We provide the trained map predictor ensembles L2M-Active [here](https://drive.g
 Here we provide instructions on how to use our code. It is advised to set up the root_path (directory that includes habitat-lab), log_dir, and paths to data folders and models before-hand in the `train_options.py`.
 
 #### Testing on our episodes for object-goal navigation
+Testing requires a pretrained DDPPO model available [here](https://github.com/facebookresearch/habitat-lab/tree/master/habitat_baselines/rl/ddppo).
 To run an object-goal navigation evaluation of our method on two scenes in parallel and on the hard episodes:
 ```
 python main.py --name test_exp --ensemble_dir /path/to/ensemble/folder --with_img_segm --img_segm_model_dir /path/to/img/segm/model/folder --root_path /home/user/ --log_dir /path/to/log/dir --gpu_capacity 2 --ensemble_size 4 --scenes_list 2azQ1b91cZZ 8194nk5LbLH --test_set v5
