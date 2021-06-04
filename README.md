@@ -31,7 +31,7 @@ We provide the trained map predictor ensembles L2M-Active [here](https://drive.g
 Here we provide instructions on how to use our code. It is advised to set up the root_path (directory that includes habitat-lab), log_dir, and paths to data folders and models before-hand in the `train_options.py`.
 
 #### Testing on our episodes for object-goal navigation
-Testing requires a pretrained DDPPO model available [here](https://github.com/facebookresearch/habitat-lab/tree/master/habitat_baselines/rl/ddppo).
+Testing requires a pretrained DDPPO model available [here](https://dl.fbaipublicfiles.com/habitat/data/baselines/v1/ddppo/ddppo-models/gibson-4plus-mp3d-train-val-test-resnet50.pth). Place it under root_path/local_policy_models/.
 To run an object-goal navigation evaluation of our method on two scenes in parallel and on the hard episodes:
 ```
 python main.py --name test_exp --ensemble_dir /path/to/ensemble/folder --with_img_segm --img_segm_model_dir /path/to/img/segm/model/folder --root_path /home/user/ --log_dir /path/to/log/dir --gpu_capacity 2 --ensemble_size 4 --scenes_list 2azQ1b91cZZ 8194nk5LbLH --test_set v5
