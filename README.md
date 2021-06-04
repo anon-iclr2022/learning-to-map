@@ -5,19 +5,18 @@ Anonymized code for NeurIPS 2021 submission.
 ```
 pip install -r requirements.txt
 ```
-[Habitat-lab](https://github.com/facebookresearch/habitat-lab) and [habitat-sim](https://github.com/facebookresearch/habitat-sim) need to be installed before using our code. We build our method on the latest stable versions for both, so use `git checkout tags/v0.1.7` before installation. Follow the instructions in their corresponding repositories to install them on your system. Note that our code expects that habitat-sim is installed with the flag `--with-cuda`. 
+[Habitat-lab](https://github.com/facebookresearch/habitat-lab) and [habitat-sim](https://github.com/facebookresearch/habitat-sim) need to be installed before using our code. We build our method on the latest stable versions for both, so use `git checkout tags/v0.1.7` before installation. Follow the instructions in their corresponding repositories to install them on your system. Note that our code expects that habitat-sim is installed with the flag `--with-cuda`.
 
 
 ### Data
-We use the Matterport3D (MP3D) dataset (the habitat subset and not the entire Matterport3D) for our experiments. Follow the instructions in the [habitat-lab](https://github.com/facebookresearch/habitat-lab) repository regarding downloading the data and the dataset folder structure. In addition we provide the following:
+We use the Matterport3D (MP3D) dataset (the habitat subset and not the entire Matterport3D) for our experiments. Follow the instructions in the [habitat-lab](https://github.com/facebookresearch/habitat-lab) repository regarding the dataset folder structure. In addition we provide the following:
 
-- [MP3D Scene Pclouds](): An .npz file for each scene that we generated and that contains the 3D point cloud with semantic category labels (40 MP3D categories). This was done for our convenience because the semantic.ply files for each scene provided with the dataset contain instance labels. The folder containing the .npz files should be under `/data/scene_datasets/mp3d`.
-- [Training Episode Data](): The set of training examples that we generated for the semantic map predictor pre-training and active training (as described in section 4.1 of the paper). The folders `mp3d_objnav_episodes_final` and `mp3d_objnav_episodes_final_imgSegmOut` are used for pre-training. All folders should be under `/data/scene_datasets/mp3d`.
-- [Test Episodes](): The test episodes we generated to evaluate our method. We provide the easy `v3` and hard `v5` sets as described in section 4 of the supplementary material. Note that for the final evaluation we used half of the `v3` set (25 episodes per object instead of the 50 available) and the entirety of `v5`. These should be under `/data/datasets/objectnav/mp3d`.
+- [MP3D Scene Pclouds](https://drive.google.com/file/d/1u4SKEYs4L5RnyXrIX-faXGU1jc16CTkJ/view?usp=sharing): An .npz file for each scene that we generated and that contains the 3D point cloud with semantic category labels (40 MP3D categories). This was done for our convenience because the semantic.ply files for each scene provided with the dataset contain instance labels. The folder containing the .npz files should be placed under `/data/scene_datasets/mp3d`.
+- [Test Episodes](https://drive.google.com/drive/folders/16iI6l-J8-FtbHYLkaz4T_Mth11veXb4i?usp=sharing): The test episodes we generated to evaluate our method. We provide the easy `v3` and hard `v5` sets as described in section 4 of the supplementary material. Note that for the final evaluation we used half of the `v3` set (25 episodes per object instead of the 50 available) and the entirety of `v5`. These should be under `/data/datasets/objectnav/mp3d`.
 
 
 ### Trained Models
-We provide the trained map predictor ensembles L2M-Active [here]() and L2M-Offline [here](), and the trained image segmentation model [here]().
+We provide the trained map predictor ensembles L2M-Active [here](https://drive.google.com/file/d/1FMK0HCEfHv3E-dGKLRkbqDIiP5D61SMw/view?usp=sharing) and L2M-Offline [here](https://drive.google.com/file/d/1BPBbnz-sweiuRUI7GEfS3Yu0_xBTmMG6/view?usp=sharing), and the trained image segmentation model [here](https://drive.google.com/file/d/1JFooaaaUR7gUjVCeHxLIyLpRirfBAafI/view?usp=sharing).
 
 
 ### Instructions
@@ -36,7 +35,7 @@ python main.py --name test_map_exp --ensemble_dir /path/to/ensemble/folder --roo
 ```
 
 #### Training the map predictor models
-If you wish to train your own ensemble, first make sure all data are downloaded, and then each model in the ensemble can be trained separately:
+If you wish to train your own ensemble, you first need to generate the training data. Then each model in the ensemble can be trained separately:
 ```
 python main.py --name train_model_0 --batch_size 12 --map_loss_scale 1 --is_train --num_workers 4 --root_path /home/user/ --log_dir /path/to/log/dir --with_img_segm --img_segm_model_dir /path/to/img/segm/model/folder --stored_episodes_dir /path/to/mp3d_objnav_episodes_final/ --stored_imgSegm_episodes_dir /path/to/mp3d_objnav_episodes_final_imgSegmOut/
 ```
@@ -53,7 +52,7 @@ python main.py --name finetune_ensemble_model_0 --num_workers 4 --batch_size 6 -
 ```
 
 #### Generating training data
-If you do not want to use our provided training data then you need to generate first the initial training examples (mp3d_objnav_episodes_final), then the grounded image segmentations (mp3d_objnav_episodes_final_imgSegmOut), and finally the active data (mp3d_objnav_episodes_active).
+If you want to retrain our models, then you need to generate first the initial training examples (mp3d_objnav_episodes_final), then the grounded image segmentations (mp3d_objnav_episodes_final_imgSegmOut), and finally the active data (mp3d_objnav_episodes_active).
 
 First, to generate the initial training examples on two scenes in parallel:
 ```
@@ -67,9 +66,8 @@ python store_img_segm_ep.py --gpu_capacity 2 --img_segm_model_dir /path/to/img/s
 ```
 This step reads from the initial training examples and runs the image segmentation model to store its output. Note that the image segmentation model needs to be trained first.
 
-To generate active data on two scenes in parallel:
+To actively generate data on two scenes in parallel:
 ```
 python main.py --name active_train_data --is_train --active_training --ensemble_size 4 --ensemble_dir /path/to/ensemble/folder --gpu_capacity 2 --with_img_segm --img_segm_model_dir /path/to/img/segm/model/folder --active_ep_save_dir /path/to/save/dir/ --max_num_episodes 10000 --root_path /home/user/ --log_dir /path/to/log/dir --scenes_list 17DRP5sb8fy 1LXtFkjw3qL
 ```
-Note that to generate the active data an ensemble of map predictors needs to be trained first.
-
+Note that to actively generate useful data an ensemble of map predictors needs to be trained first.
