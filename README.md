@@ -7,6 +7,11 @@ pip install -r requirements.txt
 ```
 [Habitat-lab](https://github.com/facebookresearch/habitat-lab) and [habitat-sim](https://github.com/facebookresearch/habitat-sim) need to be installed before using our code. We build our method on the latest stable versions for both, so use `git checkout tags/v0.1.7` before installation. Follow the instructions in their corresponding repositories to install them on your system. Note that our code expects that habitat-sim is installed with the flag `--with-cuda`.
 
+We provide a Dockerfile in this repository which you can use to build an Docker image. In the Docker image, run
+```
+source activate habitat
+```
+to activate the Conda environment where the dependencies installed. When we release our code, we will also provide this image via DockerHub.
 
 ### Data
 We use the Matterport3D (MP3D) dataset (the habitat subset and not the entire Matterport3D) for our experiments. Follow the instructions in the [habitat-lab](https://github.com/facebookresearch/habitat-lab) repository regarding the dataset folder structure. In addition we provide the following:

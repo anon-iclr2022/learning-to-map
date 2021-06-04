@@ -80,7 +80,7 @@ rsa==4.7
 scikit-fmm==0.0.7
 scikit-image==0.17.2
 scikit-learn==0.23.1
-scipy==1.6.0
+scipy
 simplejson==3.17.2
 six==1.15.0
 smmap==3.0.5
@@ -91,7 +91,7 @@ tensorflow==2.4.1
 tensorflow-estimator==2.4.0
 termcolor==1.1.0
 threadpoolctl==2.1.0
-tifffile==2021.1.14
+tifffile
 torch==1.7.1
 torchgeometry==0.1.2
 torchvision==0.8.2
