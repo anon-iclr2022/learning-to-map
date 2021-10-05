@@ -20,7 +20,7 @@ pip install -r requirements.txt
 We use the Matterport3D (MP3D) dataset (the habitat subset and not the entire Matterport3D) for our experiments. Follow the instructions in the [habitat-lab](https://github.com/facebookresearch/habitat-lab) repository regarding the dataset folder structure. In addition we provide the following:
 
 - [MP3D Scene Pclouds](https://drive.google.com/file/d/1u4SKEYs4L5RnyXrIX-faXGU1jc16CTkJ/view?usp=sharing): An .npz file for each scene that we generated and that contains the 3D point cloud with semantic category labels (40 MP3D categories). This was done for our convenience because the semantic.ply files for each scene provided with the dataset contain instance labels. The folder containing the .npz files should be placed under `/data/scene_datasets/mp3d`.
-- [Test Episodes](https://drive.google.com/drive/folders/16iI6l-J8-FtbHYLkaz4T_Mth11veXb4i?usp=sharing): The test episodes we generated to evaluate our method. We provide the easy `v3` and hard `v5` sets as described in section 4 of the supplementary material. Note that for the final evaluation we used half of the `v3` set (25 episodes per object instead of the 50 available) and the entirety of `v5`. These should be under `/data/datasets/objectnav/mp3d`.
+- [Test Episodes](https://drive.google.com/drive/folders/16iI6l-J8-FtbHYLkaz4T_Mth11veXb4i?usp=sharing): The test episodes we generated to evaluate our method. We provide the easy `v3` and hard `v5` sets as described in appendix A.5. Note that for the final evaluation we used half of the `v3` set (25 episodes per object instead of the 50 available) and the entirety of `v5`. These should be under `/data/datasets/objectnav/mp3d`.
 
 
 ### Trained Models
