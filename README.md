@@ -1,5 +1,5 @@
 ## Learning to Map for Active Semantic Goal Navigation
-Anonymized code for NeurIPS 2021 submission.
+Anonymized code for ICLR 2022 submission.
 
 ### Dependencies
 
